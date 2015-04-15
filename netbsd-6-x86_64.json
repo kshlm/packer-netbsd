@@ -1,0 +1,77 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<enter><enter>e<enter><enter>dhclient wm0<enter>ftp -o /tmp/install.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/install-x86_64.sh<enter>sh /tmp/install.sh<enter>reboot<enter>"
+      ],
+      "boot_wait": "60s",
+      "disk_interface": "scsi",
+      "disk_size": 5000,
+      "disk_cache": "unsafe",
+      "format": "raw",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "847e5338c9354dfc12f43160509480724659c5469e53cc03334bb38b3b9393fed8a0d55962c6626f6eb7d569ed4ea8d328a0db4ee2bf992def5eafc6f0c3f834",
+      "iso_checksum_type": "sha512",
+      "iso_url": "http://ftp.fi.netbsd.org/pub/NetBSD/iso/6.1.5/NetBSD-6.1.5-amd64.iso",
+      "net_device": "virtio-net",
+      "output_directory": "output/netbsd-6-x86_64-qemu/",
+      "machine_type": "pc-i440fx-1.7",
+      "qemuargs": [
+        [
+          "-m",
+          "512"
+        ],
+        [
+          "-device",
+          "virtio-scsi-pci,id=scsi0"
+        ],
+        [
+          "-drive",
+          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/netbsd-6-x86_64-qemu/netbsd-6-x86_64.raw"
+        ],
+        [
+          "-device",
+          "scsi-hd,bus=scsi0.0,drive=drive0"
+        ],
+        [
+          "-device",
+          "virtio-net,netdev=user.0"
+        ]
+      ],
+      "shutdown_command": "/sbin/poweroff",
+      "ssh_password": "packer",
+      "ssh_username": "root",
+      "ssh_wait_timeout": "10000s",
+      "type": "qemu",
+      "vm_name": "netbsd-6-x86_64"
+    }
+  ],
+  "provisioners": [
+    { 
+      "scripts": [
+        "scripts/base.sh",
+        "scripts/reboot.sh"
+      ],
+      "type": "shell"
+    },
+    { 
+      "scripts": [
+        "scripts/cloudinit.sh",
+        "scripts/cleanup.sh"
+      ],
+      "pause_before": "30s",
+      "type": "shell"
+    }
+  ],
+  "post-processors": [
+    [ 
+      { 
+        "type": "compress",
+        "format": "bgzf",
+        "output": "output/netbsd-6-x86_64-compress/"
+      }
+    ]
+  ]
+}
