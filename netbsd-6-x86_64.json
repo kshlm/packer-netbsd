@@ -29,7 +29,7 @@
         ],
         [
           "-drive",
-          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/netbsd-6-x86_64-qemu/netbsd-6-x86_64.raw"
+          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/netbsd-6-x86_64-qemu/netbsd-6-x86_64"
         ],
         [
           "-device",
