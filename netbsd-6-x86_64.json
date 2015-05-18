@@ -23,28 +23,12 @@
         [
           "-m",
           "512"
-        ],
-        [
-          "-device",
-          "virtio-scsi-pci,id=scsi0"
-        ],
-        [
-          "-drive",
-          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/netbsd-6-x86_64-qemu/netbsd-6-x86_64"
-        ],
-        [
-          "-device",
-          "scsi-hd,bus=scsi0.0,drive=drive0"
-        ],
-        [
-          "-device",
-          "virtio-net,netdev=user.0"
         ]
       ],
       "shutdown_command": "/sbin/poweroff",
       "ssh_password": "packer",
       "ssh_username": "root",
-      "ssh_wait_timeout": "10000s",
+      "ssh_wait_timeout": "1200s",
       "type": "qemu",
       "vm_name": "netbsd-6-x86_64"
     }
