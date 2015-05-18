@@ -55,6 +55,7 @@
       {
         "type": "compress",
         "format": "bgzf",
+        "metadata": true,
         "output": "output/netbsd-6-x86_64-compress/"
       }
     ]
