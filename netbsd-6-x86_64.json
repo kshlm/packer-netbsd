@@ -9,6 +9,7 @@
       "disk_interface": "scsi",
       "disk_size": 5000,
       "disk_cache": "unsafe",
+      "disk_discard": "unmap",
       "format": "raw",
       "headless": true,
       "http_directory": "http",
@@ -49,14 +50,14 @@
     }
   ],
   "provisioners": [
-    { 
+    {
       "scripts": [
         "scripts/base.sh",
         "scripts/reboot.sh"
       ],
       "type": "shell"
     },
-    { 
+    {
       "scripts": [
         "scripts/cloudinit.sh",
         "scripts/cleanup.sh"
@@ -66,8 +67,8 @@
     }
   ],
   "post-processors": [
-    [ 
-      { 
+    [
+      {
         "type": "compress",
         "format": "bgzf",
         "output": "output/netbsd-6-x86_64-compress/"
