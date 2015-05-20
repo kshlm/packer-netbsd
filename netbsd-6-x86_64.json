@@ -6,7 +6,7 @@
         "<enter><enter>e<enter><enter>dhclient wm0<enter>ftp -o /tmp/install.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/install-x86_64.sh<enter>sh /tmp/install.sh<enter>reboot<enter>"
       ],
       "boot_wait": "60s",
-      "disk_interface": "scsi",
+      "disk_interface": "virtio-scsi",
       "disk_size": 5000,
       "disk_cache": "unsafe",
       "disk_discard": "unmap",
