@@ -3,9 +3,15 @@
     {
       "accelerator": "kvm",
       "boot_command": [
-        "<enter><enter>e<enter><enter>dhclient wm0<enter>ftp -o /tmp/install.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/install-x86_64.sh<enter>sh /tmp/install.sh<enter>reboot<enter>"
+        "<enter><wait5>",
+        "<enter><wait5>",
+        "e<enter><wait5>",
+        "<enter><wait5>",
+        "dhclient vioif0<enter>",
+        "ftp -o /tmp/install.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/install-8-x86_64.sh<enter><wait5>",
+        "sh /tmp/install.sh<enter>"
       ],
-      "boot_wait": "60s",
+      "boot_wait": "15s",
       "disk_interface": "virtio-scsi",
       "disk_size": 5000,
       "disk_cache": "unsafe",
@@ -13,11 +19,11 @@
       "format": "raw",
       "headless": true,
       "http_directory": "http",
-      "iso_checksum": "847e5338c9354dfc12f43160509480724659c5469e53cc03334bb38b3b9393fed8a0d55962c6626f6eb7d569ed4ea8d328a0db4ee2bf992def5eafc6f0c3f834",
-      "iso_checksum_type": "sha512",
-      "iso_url": "http://ftp.fi.netbsd.org/pub/NetBSD/iso/6.1.5/NetBSD-6.1.5-amd64.iso",
+      "iso_checksum": "http://ftp.fr.netbsd.org/pub/NetBSD-daily/HEAD/201511061730Z/images/MD5",
+      "iso_checksum_type": "md5",
+      "iso_url": "http://ftp.fr.netbsd.org/pub/NetBSD-daily/HEAD/201511061730Z/images/NetBSD-7.99.21-amd64.iso",
       "net_device": "virtio-net",
-      "output_directory": "output/netbsd-6-x86_64-qemu/",
+      "output_directory": "output/netbsd-8-x86_64-qemu/",
       "machine_type": "pc-i440fx-1.7",
       "qemuargs": [
         [
@@ -30,7 +36,7 @@
       "ssh_username": "root",
       "ssh_wait_timeout": "1200s",
       "type": "qemu",
-      "vm_name": "netbsd-6-x86_64"
+      "vm_name": "netbsd-8-x86_64"
     }
   ],
   "provisioners": [
@@ -56,7 +62,7 @@
         "type": "compress",
         "format": "bgzf",
         "metadata": true,
-        "output": "output/netbsd-6-x86_64-compress/"
+        "output": "output/netbsd-8-x86_64-compress/"
       }
     ]
   ]
