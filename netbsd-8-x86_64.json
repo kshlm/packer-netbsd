@@ -16,12 +16,12 @@
       "disk_size": 5000,
       "disk_cache": "unsafe",
       "disk_discard": "unmap",
-      "format": "raw",
+      "disk_compression": true,
+      "iso_skip_cache": true,
+      "format": "qcow2",
       "headless": true,
       "http_directory": "http",
-      "iso_checksum": "http://ftp.fr.netbsd.org/pub/NetBSD-daily/HEAD/201511061730Z/images/MD5",
-      "iso_checksum_type": "md5",
-      "iso_url": "http://ftp.fr.netbsd.org/pub/NetBSD-daily/HEAD/201511061730Z/images/NetBSD-7.99.21-amd64.iso",
+      "iso_urls": [ "http://ftp.fr.netbsd.org/pub/NetBSD-daily/HEAD/201511061730Z/images/NetBSD-7.99.21-amd64.iso" ],
       "net_device": "virtio-net",
       "output_directory": "output/netbsd-8-x86_64-qemu/",
       "machine_type": "pc-i440fx-1.7",
@@ -55,15 +55,5 @@
       "pause_before": "30s",
       "type": "shell"
     }
-  ],
-  "post-processors": [
-    [
-      {
-        "type": "compress",
-        "format": "bgzf",
-        "metadata": true,
-        "output": "output/netbsd-8-x86_64-compress/"
-      }
-    ]
   ]
 }
