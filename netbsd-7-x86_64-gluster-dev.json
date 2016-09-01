@@ -54,13 +54,17 @@
     {
       "type": "ansible",
       "playbook_file": "./ansible/base.yml"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/gluster-dev.yml"
     }
   ],
   "post-processors": [
     {
       "type": "vagrant",
       "vagrantfile_template": "./Vagrantfile",
-      "output": "NetBSD-7.0.1-{{.Provider}}.box"
+      "output": "NetBSD-7.0.1-gluster-dev-{{.Provider}}.box"
     }
   ]
 }
