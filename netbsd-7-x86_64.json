@@ -1,0 +1,70 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<enter><wait10><wait5>",
+        "<enter><wait5>",
+        "b<enter><wait5>",
+        "x<enter><wait5>",
+        "dhclient vioif0<enter>",
+        "ftp -o /tmp/install.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}/install-7-x86_64.sh<enter><wait5>",
+        "sh /tmp/install.sh<enter>"
+      ],
+      "boot_wait": "5s",
+      "disk_interface": "virtio",
+      "disk_size": 5000,
+      "disk_cache": "unsafe",
+      "disk_discard": "unmap",
+      "disk_compression": true,
+      "format": "qcow2",
+      "headless": false,
+      "http_directory": "http",
+      "iso_urls": [ "https://ftp.netbsd.org/pub/NetBSD/iso/7.0.1/NetBSD-7.0.1-amd64.iso" ],
+      "iso_checksum": "b2f0da85e8efc398911e87dba3a7bb27",
+      "iso_checksum_type": "md5",
+      "net_device": "virtio-net",
+      "output_directory": "output/netbsd-7-x86_64-qemu/",
+      "machine_type": "pc-i440fx-1.7",
+      "qemuargs": [
+        [
+          "-m",
+          "2048"
+        ],
+        [
+          "-smp",
+          "cpus=2"
+        ]
+      ],
+      "shutdown_command": "/sbin/poweroff",
+      "ssh_password": "vagrant",
+      "ssh_username": "root",
+      "ssh_wait_timeout": "1200s",
+      "type": "qemu",
+      "vm_name": "netbsd-7-x86_64"
+    }
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/base.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/base.yml"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/gluster-dev.yml"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "vagrantfile_template": "./Vagrantfile",
+      "output": "NetBSD-7.0.1-{{.Provider}}.box"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+---
+- name: Setup NetBSD for building and running GlusterFS
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: Install build dependencies
+    package: name={{ item }} state=latest
+    with_items:
+      - autoconf
+      - automake
+      - libtool
+      - bison
+      - flex
+      - pkg-config
+      - argp
+      - bash
+      - git
+      - libxml2
+      - openssl
+      - sqlite3
+      - userspace-rcu
+      - python27
+      - readline
+      - bash
+      - tmux
+      - vim
+

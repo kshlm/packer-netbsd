@@ -1,0 +1,33 @@
+---
+- name: Setup sudo
+  hosts: all
+  tasks:
+
+  - name: Install sudo
+    package: name=sudo state=latest
+
+  - name: Setup sudoers
+    lineinfile: path=/usr/pkg/etc/sudoers.d/wheel create=yes owner=root group=wheel mode=0644 line="%wheel ALL=(ALL) NOPASSWD:ALL"
+
+
+- name: Create vagrant user
+  hosts: all
+  tasks:
+
+  - name: Generate password hash
+    command: pwhash vagrant
+    register: pwhash
+
+  - name: Create vagrant user
+    user: name=vagrant password={{ pwhash.stdout_lines[0] }} groups=wheel shell=/bin/ksh
+
+  - name: Setup vagrant insecure ssh authorized_key
+    authorized_key: user=vagrant key=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
+
+
+- name: Fixup root user
+  hosts: all
+  tasks:
+
+  - name: Set /bin/ksh as shell
+    user: name=root shell=/bin/ksh
